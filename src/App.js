@@ -99,15 +99,11 @@ function App() {
             <Row>
                 <MovieSearch searchChange={handleSearch} />
             </Row>
-            {
-                nominations.length >= 5 ?
-                    <Row>
-                        <Alert variant='info'>
-                            You've nominated {nominations.length} nominations! You only need a minimum of 5 nominations but feel free to keep nominating!
-                        </Alert>
-                    </Row>
-                    : null
-            }
+            <Row>
+                <Alert variant='info' show={nominations.length >= 5}>
+                    You've nominated {nominations.length} nominations! You only need 5 nominations but feel free to keep nominating!
+                </Alert>
+            </Row>
             <Row>
                 <Col>
                     <MovieResults searchTerm={searchTerm} results={results} nominations={nominations} nominateClick={nominateClick} />
@@ -115,6 +111,9 @@ function App() {
                 <Col>
                     <MovieNominations nominations={nominations} removeNominationClick={removeNominationClick} />
                 </Col>
+            </Row>
+            <Row>
+                Made by Jack Rong
             </Row>
         </Container>
     );

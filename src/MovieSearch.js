@@ -1,5 +1,3 @@
-import Row from 'react-bootstrap/Row';
-
 function MovieSearch({ searchChange }) {
     return (
         <>
