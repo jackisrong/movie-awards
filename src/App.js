@@ -28,29 +28,27 @@ function App() {
     // get nominations from local storage on first load
     useEffect(() => {
         let storedNominations = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
-        if (storedNominations) {
+        if (storedNominations)
             setNominations(storedNominations);
-        }
     }, []);
 
-    // store nominations into local storage when a new movie is nominated
-    // TODO: we're storing the entire JSON object of the nomination that's
-    //       returned by the API. Ideally, we want to only store the IMDB
-    //       ID and re-query the API on load to save space and in case
-    //       data was changed on the API side
+    // manage when nominations change
     useEffect(() => {
-        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(nominations))
-    }, [nominations]);
+        // store nominations into local storage when a new movie is nominated
+        // TODO: we're storing the entire JSON object of the nomination that's
+        //       returned by the API. Ideally, we want to only store the IMDB
+        //       ID and re-query the API on load to save space and in case
+        //       data was changed on the API side
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(nominations));
 
-    // when search term is changed, call search API
-    useEffect(searchAPI, [searchTerm]);
-
-    // when movie is nominated, check if we have 5 nominations now
-    useEffect(() => {
+        // check if we have 5 nominations to display banner
         if (nominations.length === 5) {
             // display banner
         }
     }, [nominations]);
+
+    // when search term is changed, call search API
+    useEffect(searchAPI, [searchTerm]);
 
     // call API with search term
     function searchAPI() {
