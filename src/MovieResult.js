@@ -5,12 +5,13 @@ import Image from 'react-bootstrap/Image';
 
 function MovieResult({ result, nominations, nominateClick }) {
     function handleNominateClick(e) {
-        nominateClick(result.imdbID);
+        nominateClick(result);
     }
 
     function setButton() {
-        if (nominations?.includes(result.imdbID))
+        if (nominations.some(nomination => nomination.imdbId === result.imdbID)) {
             return <Button variant='primary' size='sm' onClick={handleNominateClick} disabled>Nominate</Button>;
+        }
         return <Button variant='primary' size='sm' onClick={handleNominateClick}>Nominate</Button>;
     }
 

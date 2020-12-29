@@ -18,47 +18,39 @@ TODO:
 - banner when 5 nominations
 - bootstrap & css
 - clean up
-    - get rid of need for nominationIds
 */
 
 function App() {
     const [searchTerm, setSearchTerm] = useState('');
     const [results, setResults] = useState([]);
-    const [nominationIds, setNominationIds] = useState([]);
     const [nominations, setNominations] = useState([]);
 
     // get nominations from local storage on first load
     useEffect(() => {
-        let storedNominationIds = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
-        if (storedNominationIds) {
-            setNominationIds(storedNominationIds);
-
-            console.log(nominationIds);
-
-            storedNominationIds.forEach(nominationId => {
-                console.log(nominationId);
-                getMovieWithIdAPI(nominationId);
-            });
-
-            console.log(nominations);
+        let storedNominations = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
+        if (storedNominations) {
+            setNominations(storedNominations);
         }
     }, []);
 
-    // store nominations when a new movie is nominated
-    // we only store the nomination IMDB IDs
+    // store nominations into local storage when a new movie is nominated
+    // TODO: we're storing the entire JSON object of the nomination that's
+    //       returned by the API. Ideally, we want to only store the IMDB
+    //       ID and re-query the API on load to save space and in case
+    //       data was changed on the API side
     useEffect(() => {
-        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(nominationIds))
-    }, [nominationIds]);
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(nominations))
+    }, [nominations]);
 
     // when search term is changed, call search API
     useEffect(searchAPI, [searchTerm]);
 
     // when movie is nominated, check if we have 5 nominations now
     useEffect(() => {
-        if (nominationIds.length === 5) {
+        if (nominations.length === 5) {
             // display banner
         }
-    }, [nominationIds]);
+    }, [nominations]);
 
     // call API with search term
     function searchAPI() {
@@ -79,26 +71,6 @@ function App() {
             });
     }
 
-    // call API with IMDB ID
-    function getMovieWithIdAPI(imdbId) {
-        fetch(API_URL_BASE + '?i=' + imdbId + API_URL_TYPE + API_URL_KEY)
-            .then((resp) => resp.json())
-            .then((data) => {
-                if (data.Response === "False") {
-                    // no matching movie with id imdbId from API
-                    // this should never happen - we do nothing
-                } else {
-                    // valid movie returned by API with id imdbId
-                    let newNominations = [...nominations, data];
-                    setNominations(newNominations);
-                }
-            })
-            .catch((err) => {
-                // in case of error
-                console.log(err)
-            });
-    }
-
     // handler for when search box text has changed
     function handleSearch(e) {
         setSearchTerm(e.target.value);
@@ -106,18 +78,14 @@ function App() {
 
     // handler for when nominate button is clicked on movie result
     // ASSUME: if a movie is already nominated, the button was disabled
-    function nominateClick(imdbId) {
-        let newNominationIds = [...nominationIds, imdbId];
-        setNominationIds(newNominationIds);
-
-        getMovieWithIdAPI(imdbId);
+    //         so it could not have triggered this function
+    function nominateClick(result) {
+        let newNominations = [...nominations, result];
+        setNominations(newNominations);
     }
 
     // handler for when remove button is clicked on movie nomination
     function removeNominationClick(imdbId) {
-        let newNominationIds = nominationIds.filter(nomination => nomination !== imdbId);
-        setNominationIds(newNominationIds);
-
         let newNominations = nominations.filter(nomination => nomination.imdbID !== imdbId);
         setNominations(newNominations);
     }
@@ -135,7 +103,7 @@ function App() {
             </Row>
             <Row>
                 <Col>
-                    <MovieResults searchTerm={searchTerm} results={results} nominations={nominationIds} nominateClick={nominateClick} />
+                    <MovieResults searchTerm={searchTerm} results={results} nominations={nominations} nominateClick={nominateClick} />
                 </Col>
                 <Col>
                     <MovieNominations nominations={nominations} removeNominationClick={removeNominationClick} />
