@@ -16,7 +16,6 @@ const LOCAL_STORAGE_KEY = 'movieAwards.nominationIds';
 
 /*
 TODO:
-- banner when 5 nominations
 - bootstrap & css
 - clean up
 */
