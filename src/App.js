@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Alert from 'react-bootstrap/Alert';
 
 const API_URL_BASE = 'http://www.omdbapi.com/';
 const API_URL_KEY = '&apikey=52aab954';
@@ -99,6 +100,15 @@ function App() {
             <Row>
                 <MovieSearch searchChange={handleSearch} />
             </Row>
+            {
+                nominations.length >= 5 ?
+                    <Row>
+                        <Alert variant='info'>
+                            You've nominated {nominations.length} nominations! You only need a minimum of 5 nominations but feel free to keep nominating!
+                        </Alert>
+                    </Row>
+                    : null
+            }
             <Row>
                 <Col>
                     <MovieResults searchTerm={searchTerm} results={results} nominations={nominations} nominateClick={nominateClick} />

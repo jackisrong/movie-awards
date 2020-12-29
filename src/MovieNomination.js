@@ -11,7 +11,7 @@ function MovieNomination({ nomination, removeNominationClick }) {
     return (
         <div>
             <Row>
-                <Col>
+                <Col xs={3}>
                     <Image src={nomination.Poster} alt={''} fluid></Image>
                 </Col>
                 <Col>

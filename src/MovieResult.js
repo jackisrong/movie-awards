@@ -18,7 +18,7 @@ function MovieResult({ result, nominations, nominateClick }) {
     return (
         <>
             <Row>
-                <Col>
+                <Col xs={3}>
                     <Image src={result.Poster} alt={''} fluid></Image>
                 </Col>
                 <Col>
