@@ -1,17 +1,29 @@
+/* APP */
 #app {
     height: 100%;
 }
 
+/* ROW THAT CONTAINS RESULTS & NOMINATIONS COLUMNS */
 #content-row {
     height: 60%;
 }
 
+/* RESULTS & NOMINATIONS COLUMNS */
 #results-col, #nominations-col {
     height: 100%;
     overflow-x: auto;
     overflow-y: scroll;
 }
 
+#results-col p, #nominations-col p {
+    margin: 0;
+}
+
+#results-col .row, #nominations-col .row {
+    padding-bottom: 10px;
+}
+
+/* FOOTER */
 #footer-row {
     padding-top: 20px;
 }

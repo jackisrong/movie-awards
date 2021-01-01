@@ -141,7 +141,7 @@ function App() {
             </Row>
             <Row id='alert-row'>
                 <Alert variant='info' show={nominations.length >= 5}>
-                    You have nominated {nominations.length} nominations! You only need 5 nominations but feel free to keep nominating!
+                    You have nominated {nominations.length} movies! You only need 5 nominations but feel free to keep adding more!
                 </Alert>
             </Row>
             <Row id='content-row'>
