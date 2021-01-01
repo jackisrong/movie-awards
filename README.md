@@ -1,13 +1,21 @@
 # movie-awards
 
-A React web app project created for
+_A React web app project created to learn React and apply for an internship._
+
+**Disclaimer:** This is my first attempt at a React web app. This honestly would've been easier if I made it in pure JavaScript but I decided to take a challenge and use it as an opportunity to learn React (which I've put on the back burner for quite some time). Some things went well, some things went not so well, but here we are.
+
+This web app allows you to search for movies by title and add them to a list of your nominated movies. The next step would probably be to send this information to the backend to find the best movies of 2020, but in its current state it's kind of useless. For a more practical use in the current state I guess you can think of it as a list of your favourite movies or maybe a list of movies you want to watch.
 
 ## Features
-* 
-* 
-* 
+* A search box that displays results as you're typing. Results contain the movie poster (if available), the title, the year of release, along with a button to nominate it. The button gets disabled if the movie is already nominated and re-enabled if removed from nominations.
+* Search results use infinite scroll to display more results. Once you scroll to the end of the 10 results provided per page by the API, it automatically loads the next 10.
+* Nominations get stored to local storage in case you want to come back later and see your nominations again.
+* Banner that tells you when you've nominated 5 movies.
 
 ## Limitations and Improvements
-* 
-* 
-* 
+* There are a couple TODO comments I've left in the code as future improvements, either to the efficiency or robustness of the web app. Mostly in src/App.js if interested.
+
+## Technologies Used
+* [React](https://reactjs.org/)
+* [React Bootstrap](https://react-bootstrap.github.io/)
+* [OMDb API](http://www.omdbapi.com/)
