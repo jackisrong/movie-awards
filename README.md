@@ -14,6 +14,7 @@ This web app allows you to search for movies by title and add them to a list of 
 
 ## Limitations and Improvements
 * There are a couple TODO comments I've left in the code as future improvements, either to the efficiency or robustness of the web app. Mostly in src/App.js if interested.
+* Add loading animation for when search results are being fetched. This won't really be necessary because the API results load pretty much instantly but in case of slow internet connections this would be useful.
 
 ## Technologies Used
 * [React](https://reactjs.org/)
