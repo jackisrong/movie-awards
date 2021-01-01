@@ -152,9 +152,7 @@ function App() {
                 </Col>
             </Row>
             <Row id='footer-row'>
-                Made with 🌯 in Vancouver
-                <br />
-                Jack Rong
+                <a href='http://jackrong.me' target='_blank' rel='noreferrer'>Made with 🌯 in Vancouver by Jack Rong</a>
             </Row>
         </Container>
     );
