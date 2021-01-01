@@ -1,3 +1,4 @@
+import './App.css';
 import { useState, useEffect } from 'react';
 import MovieSearch from './MovieSearch';
 import MovieResults from './MovieResults';
@@ -16,6 +17,8 @@ const LOCAL_STORAGE_KEY = 'movieAwards.nominationIds';
 
 /*
 TODO:
+- add scroll bar lazy loading for more search results
+- search loading & no results behaviour
 - bootstrap & css
 - clean up
 */
@@ -40,11 +43,6 @@ function App() {
         //       ID and re-query the API on load to save space and in case
         //       data was changed on the API side
         localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(nominations));
-
-        // check if we have 5 nominations to display banner
-        if (nominations.length === 5) {
-            // display banner
-        }
     }, [nominations]);
 
     // when search term is changed, call search API
@@ -89,31 +87,33 @@ function App() {
     }
 
     return (
-        <Container>
+        <Container className='app'>
             <Row>
                 <h1>Movie Awards</h1>
             </Row>
             <Row>
                 <p>Search for movies and add them to your list of nominations!</p>
             </Row>
-            <Row>
+            <Row className='search-row'>
                 <MovieSearch searchChange={handleSearch} />
             </Row>
-            <Row>
+            <Row className='alert-row'>
                 <Alert variant='info' show={nominations.length >= 5}>
-                    You've nominated {nominations.length} nominations! You only need 5 nominations but feel free to keep nominating!
+                    You have nominated {nominations.length} nominations! You only need 5 nominations but feel free to keep nominating!
                 </Alert>
             </Row>
-            <Row>
-                <Col>
+            <Row className='content-row'>
+                <Col className='results-col'>
                     <MovieResults searchTerm={searchTerm} results={results} nominations={nominations} nominateClick={nominateClick} />
                 </Col>
-                <Col>
+                <Col className='nominations-col'>
                     <MovieNominations nominations={nominations} removeNominationClick={removeNominationClick} />
                 </Col>
             </Row>
-            <Row>
-                Made by Jack Rong
+            <Row className='footer-row'>
+                Made with 🌯 in Vancouver
+                <br />
+                Jack Rong
             </Row>
         </Container>
     );
