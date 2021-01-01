@@ -17,8 +17,7 @@ const LOCAL_STORAGE_KEY = 'movieAwards.nominationIds';
 
 /*
 TODO:
-- search loading & no results behaviour
-- bootstrap & css
+- search loading
 - improvements to robustness
 - clean up
 */
@@ -28,6 +27,7 @@ function App() {
     const [results, setResults] = useState([]);
     const [nominations, setNominations] = useState([]);
     const [isFetching, setIsFetching] = useState(false);
+    const [queryErrorMessage, setQueryErrorMessage] = useState('');
 
     const resultsColRef = useRef();
 
@@ -77,6 +77,7 @@ function App() {
                 if (data.Response === "False") {
                     // no result from API
                     setResults([]);
+                    setQueryErrorMessage(data.Error);
                 } else {
                     // API returns valid data
                     if (fetchMore && results) {
@@ -145,7 +146,7 @@ function App() {
             </Row>
             <Row id='content-row'>
                 <Col id='results-col' ref={resultsColRef}>
-                    <MovieResults searchTerm={searchTerm} results={results} nominations={nominations} nominateClick={nominateClick} />
+                    <MovieResults searchTerm={searchTerm} results={results} nominations={nominations} queryErrorMessage={queryErrorMessage} nominateClick={nominateClick} />
                 </Col>
                 <Col id='nominations-col'>
                     <MovieNominations nominations={nominations} removeNominationClick={removeNominationClick} />
