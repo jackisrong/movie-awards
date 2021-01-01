@@ -5,12 +5,9 @@ function MovieResults({ searchTerm, results, nominations, queryErrorMessage, nom
     return (
         <>
             <h3>Results for "<i>{searchTerm}</i>"</h3>
-            {
-                results.length === 0 && searchTerm &&
-                <Alert variant='danger'>
-                    {queryErrorMessage} Keep typing or try another movie title.
-                </Alert>
-            }
+            <Alert variant='danger' show={results.length === 0 && searchTerm}>
+                {queryErrorMessage} Keep typing or try another movie title.
+            </Alert>
             {
                 results.map(result => {
                     return <MovieResult key={result.imdbId} result={result} nominations={nominations} nominateClick={nominateClick} />

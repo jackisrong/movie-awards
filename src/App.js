@@ -15,13 +15,6 @@ const API_URL_TYPE = '&type=movie';
 
 const LOCAL_STORAGE_KEY = 'movieAwards.nominationIds';
 
-/*
-TODO:
-- search loading
-- improvements to robustness
-- clean up
-*/
-
 function App() {
     const [searchTerm, setSearchTerm] = useState('');
     const [results, setResults] = useState([]);
