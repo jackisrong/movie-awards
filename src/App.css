@@ -1,18 +1,18 @@
-.app {
+#app {
     height: 100%;
 }
 
-.content-row {
+#content-row {
     height: 60%;
 }
 
-.results-col, .nominations-col {
+#results-col, #nominations-col {
     height: 100%;
     overflow-x: auto;
     overflow-y: scroll;
 }
 
-.footer-row {
+#footer-row {
     padding-top: 20px;
 }
 

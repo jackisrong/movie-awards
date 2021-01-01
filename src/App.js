@@ -1,5 +1,5 @@
 import './App.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import MovieSearch from './MovieSearch';
 import MovieResults from './MovieResults';
 import MovieNominations from './MovieNominations';
@@ -17,9 +17,9 @@ const LOCAL_STORAGE_KEY = 'movieAwards.nominationIds';
 
 /*
 TODO:
-- add scroll bar lazy loading for more search results
 - search loading & no results behaviour
 - bootstrap & css
+- improvements to robustness
 - clean up
 */
 
@@ -27,12 +27,19 @@ function App() {
     const [searchTerm, setSearchTerm] = useState('');
     const [results, setResults] = useState([]);
     const [nominations, setNominations] = useState([]);
+    const [isFetching, setIsFetching] = useState(false);
 
-    // get nominations from local storage on first load
+    const resultsColRef = useRef();
+
+    // manage first load
     useEffect(() => {
+        // get nominations from local storage
         let storedNominations = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
         if (storedNominations)
             setNominations(storedNominations);
+
+        // add listener to results column for infinite scroll
+        resultsColRef.current.addEventListener('scroll', handleResultsScroll);
     }, []);
 
     // manage when nominations change
@@ -48,9 +55,23 @@ function App() {
     // when search term is changed, call search API
     useEffect(searchAPI, [searchTerm]);
 
+    useEffect(() => {
+        if (!isFetching)
+            return;
+        searchAPI(true);
+    }, [isFetching]);
+
     // call API with search term
-    function searchAPI() {
-        fetch(API_URL_BASE + '?s=' + searchTerm + API_URL_TYPE + API_URL_KEY)
+    function searchAPI(fetchMore = false) {
+        let pageNumber = 1;
+        if (fetchMore && results) {
+            // ASSUME: API returns 10 results per page
+            // TODO: to make this more robust, keep track of which page we last queried
+            //       instead of relying on the assumption
+            pageNumber = Math.floor(results.length / 10) + 1;
+        }
+
+        fetch(API_URL_BASE + '?s=' + searchTerm + API_URL_TYPE + '&page=' + pageNumber + API_URL_KEY)
             .then((resp) => resp.json())
             .then((data) => {
                 if (data.Response === "False") {
@@ -58,8 +79,19 @@ function App() {
                     setResults([]);
                 } else {
                     // API returns valid data
-                    setResults(data.Search);
+                    if (fetchMore && results) {
+                        if (results.length < data.totalResults) {
+                            // if don't already have all the results, we add the new results
+                            let newResults = [...results, ...data.Search];
+                            setResults(newResults);
+                        }
+                    } else {
+                        setResults(data.Search);
+                    }
                 }
+            })
+            .finally(() => {
+                setIsFetching(false);
             })
             .catch((err) => {
                 // in case of error
@@ -70,6 +102,15 @@ function App() {
     // handler for when search box text has changed
     function handleSearch(e) {
         setSearchTerm(e.target.value);
+    }
+
+    // handler for results scrollbar
+    function handleResultsScroll(e) {
+        // take total scrollable height subtract the amount we've scrolled
+        // if this is equal to the amount of content we can see, then we're at the bottom
+        if (resultsColRef.current.scrollHeight - resultsColRef.current.scrollTop === resultsColRef.current.clientHeight && !isFetching) {
+            setIsFetching(true);
+        }
     }
 
     // handler for when nominate button is clicked on movie result
@@ -87,30 +128,30 @@ function App() {
     }
 
     return (
-        <Container className='app'>
+        <Container id='app'>
             <Row>
                 <h1>Movie Awards</h1>
             </Row>
             <Row>
                 <p>Search for movies and add them to your list of nominations!</p>
             </Row>
-            <Row className='search-row'>
+            <Row id='search-row'>
                 <MovieSearch searchChange={handleSearch} />
             </Row>
-            <Row className='alert-row'>
+            <Row id='alert-row'>
                 <Alert variant='info' show={nominations.length >= 5}>
                     You have nominated {nominations.length} nominations! You only need 5 nominations but feel free to keep nominating!
                 </Alert>
             </Row>
-            <Row className='content-row'>
-                <Col className='results-col'>
+            <Row id='content-row'>
+                <Col id='results-col' ref={resultsColRef}>
                     <MovieResults searchTerm={searchTerm} results={results} nominations={nominations} nominateClick={nominateClick} />
                 </Col>
-                <Col className='nominations-col'>
+                <Col id='nominations-col'>
                     <MovieNominations nominations={nominations} removeNominationClick={removeNominationClick} />
                 </Col>
             </Row>
-            <Row className='footer-row'>
+            <Row id='footer-row'>
                 Made with 🌯 in Vancouver
                 <br />
                 Jack Rong
