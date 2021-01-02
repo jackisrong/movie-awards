@@ -15,7 +15,7 @@ function MovieNominations({ nominations, removeNominationClick }) {
                     nominations.map(nomination => {
                         return (
                             <CSSTransition key={nomination.imdbID} classNames='nominations' timeout={300}>
-                                <MovieNomination key={nomination.imdbID} nomination={nomination} removeNominationClick={removeNominationClick} />
+                                <MovieNomination nomination={nomination} removeNominationClick={removeNominationClick} />
                             </CSSTransition>
                         );
                     })

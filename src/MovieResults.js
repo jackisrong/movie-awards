@@ -10,7 +10,7 @@ function MovieResults({ searchTerm, results, nominations, queryErrorMessage, nom
             </Alert>
             {
                 results.map(result => {
-                    return <MovieResult key={result.imdbId} result={result} nominations={nominations} nominateClick={nominateClick} />
+                    return <MovieResult key={result.imdbID} result={result} nominations={nominations} nominateClick={nominateClick} />
                 })
             }
         </>
