@@ -1,17 +1,20 @@
 .nominations-enter {
-    opacity: 0.01;
+    opacity: 0;
+    transform: scale(0.9);
 }
   
 .nominations-enter.nominations-enter-active {
     opacity: 1;
-    transition: opacity 500ms ease-in;
+    transform: translateX(0);
+    transition: opacity 300ms, transform 300ms;
 }
   
-.nominations-leave {
+.nominations-exit {
     opacity: 1;
 }
   
-.nominations-leave.nominations-leave-active {
-    opacity: 0.01;
-    transition: opacity 300ms ease-in;
+.nominations-exit.nominations-exit-active {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 300ms, transform 300ms;
 }

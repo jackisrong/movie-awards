@@ -1,6 +1,6 @@
 import './MovieNominations.css';
 import MovieNomination from './MovieNomination';
-import { CSSTransitionGroup } from 'react-transition-group';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import Alert from 'react-bootstrap/Alert';
 
 function MovieNominations({ nominations, removeNominationClick }) {
@@ -10,13 +10,17 @@ function MovieNominations({ nominations, removeNominationClick }) {
             <Alert variant='primary' show={nominations.length === 0}>
                 You don't have any nominations :( Search for a movie to start nominating!
             </Alert>
-            <CSSTransitionGroup transitionName="nominations">
+            <TransitionGroup>
                 {
                     nominations.map(nomination => {
-                        return <MovieNomination key={nomination.imdbID} nomination={nomination} removeNominationClick={removeNominationClick} />
+                        return (
+                            <CSSTransition key={nomination.imdbID} classNames='nominations' timeout={300}>
+                                <MovieNomination key={nomination.imdbID} nomination={nomination} removeNominationClick={removeNominationClick} />
+                            </CSSTransition>
+                        )
                     })
                 }
-            </CSSTransitionGroup>
+            </TransitionGroup>
         </>
     );
 }
