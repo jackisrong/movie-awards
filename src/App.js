@@ -22,7 +22,11 @@ function App() {
     const [isFetching, setIsFetching] = useState(false);
     const [queryErrorMessage, setQueryErrorMessage] = useState('');
 
+    const searchBoxRef = useRef();
     const resultsColRef = useRef();
+
+    let searchTypingTimer;
+    let searchTypingInterval = 500;
 
     // manage first load
     useEffect(() => {
@@ -93,9 +97,12 @@ function App() {
             });
     }
 
-    // handler for when search box text has changed
+    // handler for when search box text has changed, using a debounce
     function handleSearch(e) {
-        setSearchTerm(e.target.value);
+        clearTimeout(searchTypingTimer);
+        searchTypingTimer = setTimeout(() => {
+            setSearchTerm(e.target.value);
+        }, searchTypingInterval);
     }
 
     // handler for results scrollbar
@@ -129,7 +136,7 @@ function App() {
                 <p>Search for movies and add them to your list of nominations!</p>
             </Row>
             <Row id='search-row'>
-                <MovieSearch searchChange={handleSearch} />
+                <MovieSearch searchChange={handleSearch} searchBoxRef={searchBoxRef} />
             </Row>
             <Row id='alert-row'>
                 <Alert variant='info' show={nominations.length >= 5}>

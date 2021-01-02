@@ -1,7 +1,7 @@
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 
-function MovieSearch({ searchChange }) {
+function MovieSearch({ searchChange, searchBoxRef }) {
     return (
         <>
             <h3>Movie Search</h3>
@@ -9,7 +9,7 @@ function MovieSearch({ searchChange }) {
                 <InputGroup.Prepend>
                     <InputGroup.Text>Search</InputGroup.Text>
                 </InputGroup.Prepend>
-                <FormControl placeholder='Search for a movie!' aria-label='Search for a movie!' onChange={searchChange} />
+                <FormControl placeholder='Search for a movie!' aria-label='Search for a movie!' onChange={searchChange} ref={searchBoxRef} />
             </InputGroup>
         </>
     );
