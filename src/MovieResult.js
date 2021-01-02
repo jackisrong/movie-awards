@@ -9,9 +9,8 @@ function MovieResult({ result, nominations, nominateClick }) {
     }
 
     function setButton() {
-        if (nominations.some(nomination => nomination.imdbID === result.imdbID)) {
+        if (nominations.some(nomination => nomination.imdbID === result.imdbID))
             return <Button variant='primary' size='sm' onClick={handleNominateClick} title='You have already nominated this movie!' disabled>Nominate</Button>;
-        }
         return <Button variant='primary' size='sm' onClick={handleNominateClick}>Nominate</Button>;
     }
 

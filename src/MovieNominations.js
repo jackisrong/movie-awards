@@ -17,7 +17,7 @@ function MovieNominations({ nominations, removeNominationClick }) {
                             <CSSTransition key={nomination.imdbID} classNames='nominations' timeout={300}>
                                 <MovieNomination key={nomination.imdbID} nomination={nomination} removeNominationClick={removeNominationClick} />
                             </CSSTransition>
-                        )
+                        );
                     })
                 }
             </TransitionGroup>

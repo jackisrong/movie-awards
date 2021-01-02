@@ -89,7 +89,7 @@ function App() {
             })
             .catch((err) => {
                 // in case of error
-                console.log(err)
+                console.log(err);
             });
     }
 
@@ -102,9 +102,8 @@ function App() {
     function handleResultsScroll(e) {
         // take total scrollable height subtract the amount we've scrolled
         // if this is equal to the amount of content we can see, then we're at the bottom
-        if (resultsColRef.current.scrollHeight - resultsColRef.current.scrollTop === resultsColRef.current.clientHeight && !isFetching) {
+        if (resultsColRef.current.scrollHeight - resultsColRef.current.scrollTop === resultsColRef.current.clientHeight && !isFetching)
             setIsFetching(true);
-        }
     }
 
     // handler for when nominate button is clicked on movie result
