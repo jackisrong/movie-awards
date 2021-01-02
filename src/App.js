@@ -9,7 +9,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Alert from 'react-bootstrap/Alert';
 
-const API_URL_BASE = 'http://www.omdbapi.com/';
+const API_URL_BASE = 'https://www.omdbapi.com/';
 const API_URL_KEY = '&apikey=52aab954';
 const API_URL_TYPE = '&type=movie';
 
