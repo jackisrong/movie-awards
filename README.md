@@ -5,7 +5,7 @@ _A React web app project created to learn React and apply for an internship._
 See this in action: https://movie-awards.herokuapp.com/
 The app sleeps after inactivity so it might take a while to load. If it loads up to an error screen, try refreshing.
 
-**Disclaimer:** This is my first attempt at a React web app. This honestly would've been faster if I made it in pure JavaScript but I decided to take a challenge and use it as an opportunity to learn React (which I've put on the back burner for quite some time). Sorry if it's messy.
+**Disclaimer:** This is my first attempt at a React web app. This honestly would've been faster if I made it in pure JavaScript but I decided to take a challenge and use it as an opportunity to learn React (which I've put on the back burner for quite some time). Sorry if it's messy but I tried my best to find the best solutions and try to at least showcase my ability to learn and research new technologies.
 
 This web app allows you to search for movies by title and add them to a list of your nominated movies. The next step would probably be to send this information to the backend to find the best movies of 2020, but in its current state it's kind of useless. For a more practical use in the current state I guess you can think of it as a list of your favourite movies or maybe a list of movies you want to watch.
 
